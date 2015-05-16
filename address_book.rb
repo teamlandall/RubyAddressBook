@@ -1,10 +1,97 @@
 require "./contact"
+require "yaml"
 
 class AddressBook
 	attr_reader :contacts
 
 	def initialize
-		@contacts =[]
+		@contacts = []
+		open()
+	end
+
+	def open
+		if File.exists?("contacts.yml")
+			@contacts = YAML.load_file("contacts.yml")
+		end
+	end
+
+	def save
+		File.open("contacts.yml", "w") do |file|
+			file.write(contacts.to_yaml)
+		end
+	end
+
+	def run
+		loop do
+			puts "Address Book"
+			puts "a: Add Contact"
+			puts "p: Print Address Book"
+			puts "s: Search"
+			puts "e: Exit"
+			print "Enter your choice: "
+			input = gets.chomp.downcase
+			case input
+			when 'a'
+				add_contact
+			when 'p'
+				print_contact_list
+			when 's'
+				print "Search term: "
+				search = gets.chomp
+				find_by_name(search)
+				find_by_address(search)
+				find_by_phone_number(search)
+			when 'e'
+				save()
+				break
+			end
+		end
+	end
+
+	def add_contact
+		contact = Contact.new
+		print "First Name: "
+		contact.first_name = gets.chomp
+		print "Middle Name: "
+		contact.middle_name= gets.chomp
+		print "Last Name: "
+		contact.last_name = gets.chomp
+
+		loop do
+			puts "Add phone number or address? "
+			puts "p: Add phone number"
+			puts "a: Add address"
+			puts "(Any other key to go back)"
+			response = gets.chomp.downcase
+			case response
+			when 'p'
+				phone = PhoneNumber.new
+				print "Phone number type (Home, Work, etc): "
+				phone.kind = gets.chomp
+				print "Number: "
+				phone.number = gets.chomp
+				contact.phone_numbers.push(phone)
+			when 'a'
+				address = Address.new
+				print "Address type (Home, Work, etc): "
+				address.kind = gets.chomp
+				print "Address line 1: "
+				address.street_1 = gets.chomp
+				print "Address line 2: "
+				address.street_2 = gets.chomp
+				print "City: "
+				address.city = gets.chomp
+				print "State: "
+				address.state = gets.chomp
+				print "Postal Code: "
+				address.postal_code = gets.chomp
+				contact.addresses.push(address)
+			else 
+				print "\n"
+				break
+			end
+		end
+		contacts.push(contact)
 	end
 
 	def print_results(search, results)
@@ -63,29 +150,4 @@ class AddressBook
 end
 
 address_book = AddressBook.new
-
-landall = Contact.new
-landall.first_name = "Landall"
-landall.middle_name = "Don"
-landall.last_name = "Proctor"
-landall.add_phone_number("Home", "804-447-8021")
-landall.add_phone_number("Cell", "313-969-8585")
-landall.add_address("Home", "310 Durant St.", " ", "South Hill", "VA", "48207")
-
-larry = Contact.new
-larry.first_name = "Larry"
-larry.middle_name = "Geraldo"
-larry.last_name = "Smith"
-larry.add_phone_number("Home", "123-456-7890")
-larry.add_phone_number("Cell", "987-654-3210")
-larry.add_address("Home", "123 Main St.", "Apt 12", "New York", "NY", "10002")
-
-
-address_book.contacts.push(landall)
-address_book.contacts.push(larry)
-
-#address_book.print_contact_list
-#address_book.find_by_name("r")
-
-#address_book.find_by_phone_number("8")
-address_book.find_by_address("3")
+address_book.run

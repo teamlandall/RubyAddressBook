@@ -1,0 +1,43 @@
+---
+- !ruby/object:Contact
+  phone_numbers: []
+  addresses:
+  - !ruby/object:Address
+    kind: e
+    street_1: ''
+    street_2: ''
+    city: ''
+    state: ''
+    postal_code: e
+  first_name: Landall
+  middle_name: Procto
+  last_name: ''
+- !ruby/object:Contact
+  phone_numbers:
+  - !ruby/object:PhoneNumber
+    kind: HOme
+    number: 313-969-8585
+  addresses:
+  - !ruby/object:Address
+    kind: Home
+    street_1: 1332 Joliet Place
+    street_2: ''
+    city: Detroit
+    state: MI
+    postal_code: '48207'
+  first_name: Landall
+  middle_name: Don
+  last_name: Proctor
+- !ruby/object:Contact
+  phone_numbers: []
+  addresses:
+  - !ruby/object:Address
+    kind: Home
+    street_1: 23 Briar Patch Lane
+    street_2: ''
+    city: Newtown
+    state: CT
+    postal_code: '15706'
+  first_name: Jon
+  middle_name: Wesley
+  last_name: McCallum
