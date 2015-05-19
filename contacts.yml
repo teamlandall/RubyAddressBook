@@ -1,18 +1,5 @@
 ---
 - !ruby/object:Contact
-  phone_numbers: []
-  addresses:
-  - !ruby/object:Address
-    kind: e
-    street_1: ''
-    street_2: ''
-    city: ''
-    state: ''
-    postal_code: e
-  first_name: Landall
-  middle_name: Procto
-  last_name: ''
-- !ruby/object:Contact
   phone_numbers:
   - !ruby/object:PhoneNumber
     kind: HOme
@@ -30,14 +17,32 @@
   last_name: Proctor
 - !ruby/object:Contact
   phone_numbers: []
+  addresses: []
+  first_name: Reggie
+  middle_name: ''
+  last_name: Jackson
+- !ruby/object:Contact
+  phone_numbers: []
   addresses:
   - !ruby/object:Address
     kind: Home
-    street_1: 23 Briar Patch Lane
-    street_2: ''
-    city: Newtown
-    state: CT
-    postal_code: '15706'
-  first_name: Jon
-  middle_name: Wesley
-  last_name: McCallum
+    street_1: '456'
+    street_2: Apt 3
+    city: New York
+    state: NY
+    postal_code: '12345'
+  first_name: Jimmy
+  middle_name: Nathan
+  last_name: Carter
+- !ruby/object:Contact
+  phone_numbers: []
+  addresses: []
+  first_name: Paul
+  middle_name: Big Blue
+  last_name: Bunyon
+- !ruby/object:Contact
+  phone_numbers: []
+  addresses: []
+  first_name: Alex
+  middle_name: ''
+  last_name: Avilla

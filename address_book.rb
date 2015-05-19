@@ -21,18 +21,41 @@ class AddressBook
 		end
 	end
 
+	#Allows user to search for existing contact and 
+	#Delete that contact from the address book. 
+	#Wrote this block on my own. Was not part of the video instruction.
+	#Boo Yah!
+	def delete
+		print "What contact do you want to delete? "
+		search = gets.chomp.downcase
+		contacts.each do |contact|
+			if contact.full_name.downcase.include?(search)
+				contacts.delete(contact)
+			end
+			save()
+		end
+	end
+
+	#Runs through the main interface prompting users to make a selection.
+	#Gets the user input and runs a case expression to call the corresponding method.
 	def run
 		loop do
+			puts "-" * 50
 			puts "Address Book"
+			puts "-" * 50
 			puts "a: Add Contact"
+			puts "d: Delete Contact"
 			puts "p: Print Address Book"
 			puts "s: Search"
 			puts "e: Exit"
+			puts "-" * 50
 			print "Enter your choice: "
 			input = gets.chomp.downcase
 			case input
 			when 'a'
 				add_contact
+			when 'd'
+				delete
 			when 'p'
 				print_contact_list
 			when 's'
@@ -48,8 +71,10 @@ class AddressBook
 		end
 	end
 
+	#User adds contacts name information.
 	def add_contact
 		contact = Contact.new
+		puts "\n"
 		print "First Name: "
 		contact.first_name = gets.chomp
 		print "Middle Name: "
@@ -57,15 +82,22 @@ class AddressBook
 		print "Last Name: "
 		contact.last_name = gets.chomp
 
+		#prompts user make an additional selection of adding phone number or address.
+		#runs case expression on user response to capture the appropriate input.
 		loop do
+			puts "\n"
 			puts "Add phone number or address? "
+			puts "-" * 50
 			puts "p: Add phone number"
 			puts "a: Add address"
 			puts "(Any other key to go back)"
+			puts "-" * 50
+			print ">> "
 			response = gets.chomp.downcase
 			case response
 			when 'p'
 				phone = PhoneNumber.new
+				puts "\n"
 				print "Phone number type (Home, Work, etc): "
 				phone.kind = gets.chomp
 				print "Number: "
@@ -73,6 +105,7 @@ class AddressBook
 				contact.phone_numbers.push(phone)
 			when 'a'
 				address = Address.new
+				puts "\n"
 				print "Address type (Home, Work, etc): "
 				address.kind = gets.chomp
 				print "Address line 1: "
@@ -94,7 +127,10 @@ class AddressBook
 		contacts.push(contact)
 	end
 
+	#method created specifically to not repeat the same print code in each of the methods where 
+	#printing to the screen is necessary. 
 	def print_results(search, results)
+		puts "\n"
 		puts search
 		results.each do |contact|
 			puts contact.to_s('full_name')
@@ -104,6 +140,7 @@ class AddressBook
 		end
 	end
 
+	#Allows user to search through the Contacts Array by name. 
 	def find_by_name(name)
 		results = []
 		search = name.downcase
@@ -115,6 +152,7 @@ class AddressBook
 		print_results("Name search results (#{search})", results)
 	end
 
+	#Allows user to search through the Contacts Array by phone number.
 	def find_by_phone_number(number)
 		results = []
 		search = number.gsub("-", "")
@@ -128,6 +166,7 @@ class AddressBook
 		print_results("Phone Number search results (#{search})", results)
 	end
 
+	#Allows user to search through the Contacts Array by address.
 	def find_by_address(query)
 		results = []
 		search = query.downcase
@@ -141,8 +180,11 @@ class AddressBook
 		print_results("Address search results (#{search})", results)
 	end
 
+	#User can print the names of the current contact list.
 	def print_contact_list
+		puts "-" * 50
 		puts "Contact List: "
+		puts "-" * 50
 		contacts.each do |contact|
 			puts contact.to_s("last_first")
 		end
